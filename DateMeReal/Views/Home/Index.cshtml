@@ -1,0 +1,31 @@
+﻿@{
+    ViewData["Title"] = "Title";
+}
+
+<nav>
+    <h2>Joel's Movies</h2>
+    <ul>
+        <li><a href="#">Home</a></li>
+        <li><a asp-controller="Home" asp-action="Podcast">My Podcasts</a></li>
+        <li><a asp-controller="Home" asp-action="Application">Enter A Movie</a></li>
+    </ul>
+</nav>
+
+<div class="grid-container">
+    <br /><br />
+    <h1>The Joel Hilton Film Collection</h1>
+</div>
+
+<div class="grid-container">
+    <p>
+        Joel Hilton is a big film junkie! He minored in Film Studies at BYU, contracts as a movie reviewer for ClearPlay, and does a weekly podcast with a couple friends about movies called Baconsale. On this website you can add movies to his master list of movies! You can also click the Podcast tab to be refered to his awesome Baconsale podcast.
+    </p>
+</div>
+
+<div class="grid-container">
+    <img src="~/img/JoelHiltonHeadshot.jpg" />
+</div>
+
+<div class="grid-container">
+    <a asp-controller="Home" asp-action="Application">Add a movie entry to my database!</a>
+</div>
