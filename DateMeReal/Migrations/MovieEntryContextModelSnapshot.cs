@@ -21,9 +21,8 @@ namespace DateMeReal.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("CategoryID")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Director")
                         .IsRequired()
@@ -52,15 +51,18 @@ namespace DateMeReal.Migrations
 
                     b.HasKey("EntryId");
 
+                    b.HasIndex("CategoryID");
+
                     b.ToTable("responses");
 
                     b.HasData(
                         new
                         {
                             EntryId = 1,
-                            Category = "Romance",
+                            CategoryID = 3,
                             Director = "Damien Chazelle",
                             Edited = false,
+                            LentTo = "",
                             MovieName = "La La Land",
                             Notes = "A really good movie that makes you think.",
                             Rating = "PG-13",
@@ -69,9 +71,10 @@ namespace DateMeReal.Migrations
                         new
                         {
                             EntryId = 2,
-                            Category = "Action/Adventure",
+                            CategoryID = 6,
                             Director = "Brad Bird",
                             Edited = false,
+                            LentTo = "",
                             MovieName = "Ratatouille",
                             Notes = "Vibes are unmatched.",
                             Rating = "PG",
@@ -80,14 +83,85 @@ namespace DateMeReal.Migrations
                         new
                         {
                             EntryId = 3,
-                            Category = "Action/Adventure",
+                            CategoryID = 1,
                             Director = "Morten Tyldum",
                             Edited = false,
+                            LentTo = "",
                             MovieName = "The Imitation Game",
                             Notes = "",
                             Rating = "PG-13",
                             Year = "2014"
                         });
+                });
+
+            modelBuilder.Entity("DateMeReal.Models.Category", b =>
+                {
+                    b.Property<int>("CategoryID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("CategoryName")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("CategoryID");
+
+                    b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            CategoryID = 1,
+                            CategoryName = "Action/Adventure"
+                        },
+                        new
+                        {
+                            CategoryID = 2,
+                            CategoryName = "Comedy"
+                        },
+                        new
+                        {
+                            CategoryID = 3,
+                            CategoryName = "Romance"
+                        },
+                        new
+                        {
+                            CategoryID = 4,
+                            CategoryName = "Horror/Suspense"
+                        },
+                        new
+                        {
+                            CategoryID = 5,
+                            CategoryName = "Drama"
+                        },
+                        new
+                        {
+                            CategoryID = 6,
+                            CategoryName = "Family"
+                        },
+                        new
+                        {
+                            CategoryID = 7,
+                            CategoryName = "Miscellaneous"
+                        },
+                        new
+                        {
+                            CategoryID = 8,
+                            CategoryName = "Television"
+                        },
+                        new
+                        {
+                            CategoryID = 9,
+                            CategoryName = "VHS"
+                        });
+                });
+
+            modelBuilder.Entity("DateMeReal.Models.ApplicationEntry", b =>
+                {
+                    b.HasOne("DateMeReal.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

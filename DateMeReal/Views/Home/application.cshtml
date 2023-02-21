@@ -19,11 +19,20 @@
 
 <div class="grid-container form">
     <form method="post">
+
+        <div asp-validation-summary="All"></div>
+
         <label asp-for="MovieName">Movie Name:</label>
         <input asp-for="MovieName" /><br />
 
-        <label asp-for="Category">Category:</label>
-        <input asp-for="Category" /><br />
+        <label asp-for="CategoryID">Category:</label>
+        <select asp-for="CategoryID">
+            <option value="">Select a Category</option>
+            @foreach (Category c in ViewBag.Categories)
+            {
+                <option value="@c.CategoryID">@c.CategoryName</option>
+            }
+        </select><br />
 
         <label asp-for="Year">Year:</label>
         <input asp-for="Year" /><br />

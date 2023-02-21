@@ -13,16 +13,29 @@ namespace DateMeReal.Models
             // blank for now
         }
         public DbSet<ApplicationEntry> responses { get; set; } // set connection between database and the program
+        public DbSet<Category> Categories { get; set; } // connect Catagory table
 
-        //seeding
+        //seeding the data
         protected override void OnModelCreating(ModelBuilder mb)
         {
+            mb.Entity<Category>().HasData(
+                new Category { CategoryID = 1, CategoryName = "Action/Adventure" },
+                new Category { CategoryID = 2, CategoryName = "Comedy" },
+                new Category { CategoryID = 3, CategoryName = "Romance" },
+                new Category { CategoryID = 4, CategoryName = "Horror/Suspense" },
+                new Category { CategoryID = 5, CategoryName = "Drama" },
+                new Category { CategoryID = 6, CategoryName = "Family" },
+                new Category { CategoryID = 7, CategoryName = "Miscellaneous" },
+                new Category { CategoryID = 8, CategoryName = "Television" },
+                new Category { CategoryID = 9, CategoryName = "VHS" }
+                );
+
             mb.Entity<ApplicationEntry>().HasData(
                 new ApplicationEntry
                 {
                     EntryId = 1,
                     MovieName = "La La Land",
-                    Category = "Romance",
+                    CategoryID = 3,
                     Year = "2016",
                     Director = "Damien Chazelle",
                     Rating = "PG-13",
@@ -34,7 +47,7 @@ namespace DateMeReal.Models
                 {
                     EntryId = 2,
                     MovieName = "Ratatouille",
-                    Category = "Action/Adventure",
+                    CategoryID = 6,
                     Year = "2007",
                     Director = "Brad Bird",
                     Rating = "PG",
@@ -46,7 +59,7 @@ namespace DateMeReal.Models
                 {
                     EntryId = 3,
                     MovieName = "The Imitation Game",
-                    Category = "Action/Adventure",
+                    CategoryID = 1,
                     Year = "2014",
                     Director = "Morten Tyldum",
                     Rating = "PG-13",

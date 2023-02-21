@@ -1,5 +1,6 @@
 ﻿using DateMeReal.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -11,13 +12,11 @@ namespace DateMeReal.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
         private MovieEntryContext MovieContext { get; set; } // prep to pass data to database, set context file
 
         // constructor
-        public HomeController(ILogger<HomeController> logger, MovieEntryContext someName)
+        public HomeController(MovieEntryContext someName)
         {
-            _logger = logger;
             MovieContext = someName;
         }
 
@@ -33,32 +32,64 @@ namespace DateMeReal.Controllers
         [HttpGet]
         public IActionResult Application()
         {
+            ViewBag.Categories = MovieContext.Categories.ToList(); // dynamic var to hold lists of data
             return View();
         }
         [HttpPost]
         public IActionResult Application(ApplicationEntry entry)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid) // if valid
             {
                 MovieContext.Add(entry);
                 MovieContext.SaveChanges();
                 return View("confirmation", entry);
             }
-            else
+            else // if invalid
             {
-                return View();
+                ViewBag.Categories = MovieContext.Categories.ToList();
+                return View(entry);
             }
         }
-
-        public IActionResult Privacy()
+        [HttpGet]
+        public IActionResult MovieList()
         {
-            return View();
+            var MovieList = MovieContext.responses
+                .Include(x => x.Category)
+                .ToList();
+            return View(MovieList);
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+
+        // Edit and delete
+        [HttpGet]
+        public IActionResult Edit (int id)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            ViewBag.Categories = MovieContext.Categories.ToList();
+            var entry = MovieContext.responses.Single(x => x.EntryId == id); // lambda find the data where the id's match
+            return View("Application", entry);  // pass the view and the correct entry
         }
+        [HttpPost]
+        public IActionResult Edit (ApplicationEntry update)
+        {
+            MovieContext.Update(update);
+            MovieContext.SaveChanges(); // save changes
+
+            return RedirectToAction("MovieList"); // return to list, restart the action
+        }
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            var entry = MovieContext.responses.Single(x => x.EntryId == id);
+            return View(entry);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(ApplicationEntry entry)
+        {
+            MovieContext.responses.Remove(entry);
+            MovieContext.SaveChanges();
+            return RedirectToAction("MovieList");
+        }
+
     }
 }
