@@ -4,12 +4,31 @@
 
 @model ApplicationEntry
 
-<h2>Confirm Deletion</h2>
-<h3>Are you sure you want to delete the movie @Model.MovieName?</h3>
+    <nav>
+        <h2>Joel's Movies</h2>
+        <ul>
+            <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+            <li><a asp-controller="Home" asp-action="Podcast">My Podcasts</a></li>
+            <li><a asp-controller="Home" asp-action="Application">Enter A Movie</a></li>
+        </ul>
+    </nav>
 
-<form method="post" asp-action="Delete">
-    <button type="submit">Delete</button>
-    <a asp-controller="Home" asp-action="MovieList" class="btn btn-primary">Cancel</a>
+<br /><br />
+<div class="grid-container">
+    <h2>Confirm Deletion</h2>
+</div>
 
-    <input type="hidden" asp-for="EntryId"/>
-</form>
+<div class="grid-container">
+    <h3>Are you sure you want to delete the movie @Model.MovieName?</h3>
+</div>
+
+<!--Delete entry options or cancel-->
+<div class="grid-container">
+    <form method="post" asp-action="Delete">
+        <button type="submit">Delete</button>
+        <a asp-controller="Home" asp-action="MovieList" class="btn btn-primary">Cancel</a>
+
+        <input type="hidden" asp-for="EntryId" />
+    </form>
+</div>
+

@@ -29,46 +29,46 @@ namespace DateMeReal.Controllers
             return View();
         }
 
-        [HttpGet]
+        [HttpGet] // get for the application
         public IActionResult Application()
         {
             ViewBag.Categories = MovieContext.Categories.ToList(); // dynamic var to hold lists of data
-            return View();
+            return View(new ApplicationEntry());
         }
-        [HttpPost]
+        [HttpPost] // post for the application
         public IActionResult Application(ApplicationEntry entry)
         {
             if (ModelState.IsValid) // if valid
             {
                 MovieContext.Add(entry);
                 MovieContext.SaveChanges();
-                return View("confirmation", entry);
+                return View("confirmation", entry); // return confirmation page
             }
             else // if invalid
             {
-                ViewBag.Categories = MovieContext.Categories.ToList();
-                return View(entry);
+                ViewBag.Categories = MovieContext.Categories.ToList(); // greate view bag
+                return View(entry); // return the entry
             }
         }
-        [HttpGet]
+        [HttpGet] // get for the movie list
         public IActionResult MovieList()
         {
             var MovieList = MovieContext.responses
-                .Include(x => x.Category)
-                .ToList();
-            return View(MovieList);
+                .Include(x => x.Category) // include the categories
+                .ToList(); // put it into list format
+            return View(MovieList); // return the movie list
         }
 
 
         // Edit and delete
-        [HttpGet]
+        [HttpGet] // edit get
         public IActionResult Edit (int id)
         {
             ViewBag.Categories = MovieContext.Categories.ToList();
             var entry = MovieContext.responses.Single(x => x.EntryId == id); // lambda find the data where the id's match
             return View("Application", entry);  // pass the view and the correct entry
         }
-        [HttpPost]
+        [HttpPost] // edit post
         public IActionResult Edit (ApplicationEntry update)
         {
             MovieContext.Update(update);
@@ -76,19 +76,19 @@ namespace DateMeReal.Controllers
 
             return RedirectToAction("MovieList"); // return to list, restart the action
         }
-        [HttpGet]
+        [HttpGet] // get delete
         public IActionResult Delete(int id)
         {
             var entry = MovieContext.responses.Single(x => x.EntryId == id);
             return View(entry);
         }
 
-        [HttpPost]
+        [HttpPost] // post delete
         public IActionResult Delete(ApplicationEntry entry)
         {
             MovieContext.responses.Remove(entry);
             MovieContext.SaveChanges();
-            return RedirectToAction("MovieList");
+            return RedirectToAction("MovieList"); // redirect with info to the movie list
         }
 
     }

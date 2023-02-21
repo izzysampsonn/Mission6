@@ -30,7 +30,8 @@ namespace DateMeReal.Models
                 new Category { CategoryID = 9, CategoryName = "VHS" }
                 );
 
-            mb.Entity<ApplicationEntry>().HasData(
+            // autofill database with top 3 movies
+             mb.Entity<ApplicationEntry>().HasData(
                 new ApplicationEntry
                 {
                     EntryId = 1,

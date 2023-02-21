@@ -22,6 +22,8 @@
 
         <div asp-validation-summary="All"></div>
 
+        <input asp-for="EntryId" type="hidden" />
+
         <label asp-for="MovieName">Movie Name:</label>
         <input asp-for="MovieName" /><br />
 
@@ -40,6 +42,7 @@
         <label asp-for="Director">Director:</label>
         <input asp-for="Director" /><br />
 
+        <!-- Automatic rating drop-down not related to another table -->
         <label asp-for="Rating">Movie Rating:</label>
         <select asp-for="Rating">
             <option value="R">R</option>

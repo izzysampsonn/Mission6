@@ -8,6 +8,7 @@ namespace DateMeReal.Models
 {
     public class Category
     {
+        // create a new table for category that just has the ID and then the category
         [Key]
         [Required]
         public int CategoryID { get; set; }

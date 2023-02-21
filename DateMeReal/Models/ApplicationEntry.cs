@@ -8,12 +8,13 @@ namespace DateMeReal.Models
 {
     public class ApplicationEntry
     {
+        // set the key
         [Key]
         [Required]
         public int EntryId { get; set; }
         [Required (ErrorMessage = "Must enter movie name")]
         public string MovieName { get; set; }
-        [Required (ErrorMessage = "Must enter movie year")]
+        [Required (ErrorMessage = "Must enter movie year")] // enter all other inputs
         public string Year { get; set; }
         [Required(ErrorMessage = "Must enter director")]
         public string Director { get; set; }
@@ -26,6 +27,7 @@ namespace DateMeReal.Models
         // set up foreign key relationship
         [Required(ErrorMessage = "Must enter movie category")]
         public int CategoryID { get; set; }
+
         public Category Category { get; set; } //set an instance of type category
 
     }
